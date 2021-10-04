@@ -1,27 +1,34 @@
-body {
-    background-color: rgb(41, 122, 41);
-    margin: 0%;
+body{
+    margin:0%;
+    box-sizing: border-box;
 }
+
 h1 {
     position:relative;
     font-size: 300%;
     text-align: center;
-    margin: 0%;
-    top: 50px;
+    margin: 2%;
+    top: 0px;
 }
 
 .relative {
     position: relative;
     z-index: 2;
 }
-.container {
-    position: relative;
-    margin: 5% 20%;
-    height: auto;
-    width: auto;
-    text-align: center;
-    top: 400px;
 
+.absolute {
+    position: absolute;
+}
+
+.container {
+    margin:5% 20%;
+    right:0%;
+    left:0%;
+    text-align: center;
+    top: 600px;
+    z-index: 1;
+    box-sizing: border-box;
+    display: flex;
 }
 
 .balls {
@@ -30,12 +37,14 @@ h1 {
     height: 75px;
     width: 75px;
     display: inline-block;
-    margin: auto;
+    margin:auto;
     text-align: center;
+    vertical-align:top;
 }
 
 #red-ball {
     background-color: rgb(179, 15, 15);
+    box-sizing: border-box;
 }
 
 #yellow-ball {
@@ -68,9 +77,33 @@ img {
     z-index: -1;
     object-fit: fill;
     width: 100%;
+    height:100%;
+    top: 0%
 }
 
 .ball-count {
     border-radius: 50%;
     margin: auto;
 }
+
+.total-score {
+    height: 400px;
+    width: 300px;
+    border: 2px solid black;
+    display: inline-block;
+    text-align:center;
+    vertical-align:top;     
+    box-sizing: border-box;
+}
+
+#player-1{
+    left:0px;
+    margin-left: 0%;
+    margin-right:25%;
+}
+
+#player-2{
+    right:0%;
+    margin-right:0%; 
+    margin-left:25%;
+}   
