@@ -1,0 +1,53 @@
+body {
+    background-color: rgb(41, 122, 41);
+}
+h1 {
+    text-align: center;
+}
+.container {
+    position: relative;
+    margin: 20% 20%;
+    height: auto;
+    width: auto;
+    text-align: center;
+
+}
+
+.balls {
+    border-radius: 50%;
+    border: 2px solid black;
+    height: 100px;
+    width: 100px;
+    display: inline-block;
+    margin:auto;
+}
+
+#red-ball {
+    background-color: rgb(179, 15, 15);
+}
+
+#yellow-ball {
+    background-color: rgb(243, 243, 78);
+}
+
+#green-ball {
+    background-color: green;
+}
+
+#brown-ball {
+    background-color: rgba(143, 9, 9, 0.685);
+}
+
+#blue-ball {
+    background-color: rgb(55, 55, 218);
+}
+
+#pink-ball {
+    background-color: rgb(252, 134, 154);
+}
+
+#black-ball {
+    background-color: black;
+
+}
+
