@@ -9,7 +9,6 @@ function bindEventListeners (balls) {
        balls[i].addEventListener('click', countScore())
     }
 }
-console.log(document.getElementsByClassName('balls').length)
 
 const ballArr = ['red','yellow','green','brown','blue', 'pink','black']
  
@@ -59,7 +58,7 @@ stats = [
 //function that converts the ballArr array into the multiplier for the final score
 function ballValue(colour) {
     if (colour === 'red') {
-        return
+        return 1
     } else if (colour === 'yellow') {
         return 2 
     } else if (colour === 'green') {
@@ -75,23 +74,23 @@ function ballValue(colour) {
     }
 }
 
-
 //total score from balls, deducts the total fouls and assigns it to player(1 or 2)score to be displayed
 //still needs to have the value of the corresponding balls * the value and fouls * value, atm is just the counts
 function countScore(arr, stat, num) {
     var playerScore = 0
+ 
     for (var i = 0; i < arr.length; i++) {
         if (num === 1) {
-            playerScore += stat[0][arr[i]];
+            playerScore += ballValue(arr[i]) * stat[0][arr[i]];
         } else if (num === 2) {
-            playerScore += stat[1][arr[i]];
+            playerScore += ballValue(arr[i]) * stat[1][arr[i]];
         } 
     }
     if (num === 1) {
-        playerScore -= stat[0]['fouls']['7'] + stat[0]['fouls']['6'] + stat[0]['fouls']['5'] + stat[0]['fouls']['4']
+        playerScore -= 7*stat[0]['fouls']['7'] + 6*stat[0]['fouls']['6'] + 5*stat[0]['fouls']['5'] + 4*stat[0]['fouls']['4']
         stat[0]['totalScore'] = playerScore
     } else if (num === 2) {
-        playerScore -= stat[1]['fouls']['7'] + stat[1]['fouls']['6'] + stat[1]['fouls']['5'] + stat[1]['fouls']['4']
+        playerScore -= 7*stat[1]['fouls']['7'] + 6*stat[1]['fouls']['6'] + 5*stat[1]['fouls']['5'] + 4*stat[1]['fouls']['4']
         stat[1]['totalScore'] = playerScore
     }
   console.log(playerScore)
@@ -100,7 +99,7 @@ function countScore(arr, stat, num) {
 
 countScore(ballArr,stats,1)
 countScore(ballArr,stats,2)
-console.log ('ballValue test: ', ballValue('black'))
-console.log(stats[0])
-console.log(stats[1])
-console.log('ballArr.length in javascript.js: ', ballArr.length)
+// console.log ('ballValue test: ', ballValue('black'))
+// console.log(stats[0])
+// console.log(stats[1])
+// console.log('ballArr.length in javascript.js: ', ballArr.length)
