@@ -11,9 +11,8 @@ function bindEventListeners (balls) {
 }
 console.log(document.getElementsByClassName('balls').length)
 
-var ballArr = []
-ballArr = ['red','yellow','green','brown','blue', 'pink','black']
-
+const ballArr = ['red','yellow','green','brown','blue', 'pink','black']
+ 
 // player 1 stats are stats[0], player 2 stats are stats[1]
 
 var stats =[]
@@ -35,7 +34,7 @@ stats = [
         },
         totalScore: 0,
     }, 
-    {    
+    {   
         red: 0,
         yellow: 3,
         green: 0,
@@ -56,6 +55,25 @@ stats = [
 
 
 //need an updateStats function that is called when the corresponding coloured ball is clicked 
+
+//function that converts the ballArr array into the multiplier for the final score
+function ballValue(colour) {
+    if (colour === 'red') {
+        return
+    } else if (colour === 'yellow') {
+        return 2 
+    } else if (colour === 'green') {
+        return 3
+    } else if (colour === 'brown') {
+        return 4
+    } else if (colour === 'blue') {
+        return 5
+    } else if (colour === 'pink') {
+        return 6
+    } else if (colour === 'black') {
+        return 7
+    }
+}
 
 
 //total score from balls, deducts the total fouls and assigns it to player(1 or 2)score to be displayed
@@ -82,7 +100,7 @@ function countScore(arr, stat, num) {
 
 countScore(ballArr,stats,1)
 countScore(ballArr,stats,2)
-
+console.log ('ballValue test: ', ballValue('black'))
 console.log(stats[0])
 console.log(stats[1])
-console.log(typeof(ballArr))
+console.log('ballArr.length in javascript.js: ', ballArr.length)
