@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', start)
 
 function start () {
   bindEventListeners(document.getElementsByClassName('balls'))
+  bindButtons(document.getElementById('button'))
 }
 
 function bindEventListeners (balls) {
@@ -9,6 +10,10 @@ function bindEventListeners (balls) {
        balls[i].addEventListener('click', updateStats)
     }
 }
+
+function bindButtons (button) {
+       button.addEventListener('click', changePlayer)
+} 
 
 const ballArr = ['red','yellow','green','brown','blue', 'pink','black']
  
@@ -36,10 +41,10 @@ stats = [
     }, 
     {   
         red: 0,
-        yellow: 3,
+        yellow: 0,
         green: 0,
         brown: 0,
-        blue: 5,
+        blue: 0,
         pink: 0,
         black: 0,
         maxBreak: 0,
@@ -47,32 +52,67 @@ stats = [
             '7':0,
             '6':0,
             '5':0,
-            '4':3,
+            '4':0,
         },
         totalScore: 0,
     }
 ]
 
-//need an updateStats function that is called when the corresponding coloured ball is clicked 
+function changePlayer () {
+    if (document.getElementById('currentPlayer').innerHTML === 'Player 1') {
+        document.getElementById('currentPlayer').innerHTML = 'Player 2'
+    } else {
+        document.getElementById('currentPlayer').innerHTML = 'Player 1'
+    }
+}
+
+//updateStats function is called when the corresponding coloured ball is clicked, increments the ball count in player stat array and
+//calls the countScore function to update the totalscore being displayed
+
 function updateStats (evt) {
-   if (evt.target.id === 'red') {
-       stats[0]['red']++
-    } else if (evt.target.id === 'yellow') {
-        stats[0]['yellow']++
-    } else if (evt.target.id === 'green') {
-        stats[0]['green']++
-    } else if (evt.target.id === 'brown') {
-        stats[0]['brown']++
-    } else if (evt.target.id === 'blue') {
-        stats[0]['blue']++
-    } else if (evt.target.id === 'pink') {
-        stats[0]['pink']++
-    } else if (evt.target.id === 'black') {
-        stats[0]['black']++
+    var player = document.getElementById('currentPlayer').innerHTML
+
+   if (player === 'Player 1') {
+       if (evt.target.id === 'red') {
+            stats[0]['red']++
+        } else if (evt.target.id === 'yellow') {
+            stats[0]['yellow']++
+        } else if (evt.target.id === 'green') {
+            stats[0]['green']++
+        } else if (evt.target.id === 'brown') {
+            stats[0]['brown']++
+        } else if (evt.target.id === 'blue') {
+            stats[0]['blue']++
+        } else if (evt.target.id === 'pink') {
+            stats[0]['pink']++
+        } else if (evt.target.id === 'black') {
+            stats[0]['black']++
+        }
+    } else if (player === 'Player 2') {
+        if (evt.target.id === 'red') {
+            stats[1]['red']++
+        } else if (evt.target.id === 'yellow') {
+            stats[1]['yellow']++
+        } else if (evt.target.id === 'green') {
+            stats[1]['green']++
+        } else if (evt.target.id === 'brown') {
+            stats[1]['brown']++
+        } else if (evt.target.id === 'blue') {
+            stats[1]['blue']++
+        } else if (evt.target.id === 'pink') {
+            stats[1]['pink']++
+        } else if (evt.target.id === 'black') {
+            stats[1]['black']++
+        }
     }
 
-   countScore(ballArr, stats, 1)
-   document.getElementById('player1Score').innerHTML = stats[0]['totalScore']
+   var lowerPlayer = player.toLowerCase()
+   lowerPlayer = lowerPlayer.replace(/\s+/g, '')
+   var playerNumber = player.split(" ").pop()
+   var number = parseInt(playerNumber)
+   var arrayNum = number - 1
+   countScore(ballArr, stats, number)
+   document.getElementById(lowerPlayer + 'Score').innerHTML = stats[arrayNum]['totalScore']
 }
 //function that passes the ballArr array as an argument and returns the corresponding values for each ball
 function ballValue(colour) {
@@ -95,6 +135,7 @@ function ballValue(colour) {
 
 //total score from balls, deducts the total fouls and assigns it to player(1 or 2)score to be displayed
 //still needs to have the value of the corresponding balls * the value and fouls * value, atm is just the counts
+
 function countScore(arr, stat, num) {
     var playerScore = 0
  
@@ -112,15 +153,4 @@ function countScore(arr, stat, num) {
         playerScore -= 7*stat[1]['fouls']['7'] + 6*stat[1]['fouls']['6'] + 5*stat[1]['fouls']['5'] + 4*stat[1]['fouls']['4']
         stat[1]['totalScore'] = playerScore
     }
-  console.log(playerScore)
 }
-
-document.getElementById('player1Score').innerHTML = stats[0]['totalScore']
-document.getElementById('player2Score').innerHTML = stats[1]['totalScore']
-
-countScore(ballArr,stats,1)
-countScore(ballArr,stats,2)
-// console.log ('ballValue test: ', ballValue('black'))
-// console.log(stats[0])
-// console.log(stats[1])
-// console.log('ballArr.length in javascript.js: ', ballArr.length)
