@@ -6,27 +6,28 @@ function start () {
 
 function bindEventListeners (balls) {
     for(var i= 0; i < balls.length; i++) {
-       balls[i].addEventListener('click', countScore())
+       balls[i].addEventListener('click', updateStats)
     }
 }
 
 const ballArr = ['red','yellow','green','brown','blue', 'pink','black']
  
+
 // player 1 stats are stats[0], player 2 stats are stats[1]
 
 var stats =[]
 stats = [
     {
-        red: 12,
+        red: 0,
         yellow: 0,
         green: 0,
         brown: 0,
         blue: 0,
-        pink: 3,
+        pink: 0,
         black: 0,
         maxBreak: 0,
         fouls: {
-            '7':1,
+            '7':0,
             '6':0,
             '5':0,
             '4':0,
@@ -52,10 +53,28 @@ stats = [
     }
 ]
 
-
 //need an updateStats function that is called when the corresponding coloured ball is clicked 
+function updateStats (evt) {
+   if (evt.target.id === 'red') {
+       stats[0]['red']++
+    } else if (evt.target.id === 'yellow') {
+        stats[0]['yellow']++
+    } else if (evt.target.id === 'green') {
+        stats[0]['green']++
+    } else if (evt.target.id === 'brown') {
+        stats[0]['brown']++
+    } else if (evt.target.id === 'blue') {
+        stats[0]['blue']++
+    } else if (evt.target.id === 'pink') {
+        stats[0]['pink']++
+    } else if (evt.target.id === 'black') {
+        stats[0]['black']++
+    }
 
-//function that converts the ballArr array into the multiplier for the final score
+   countScore(ballArr, stats, 1)
+   document.getElementById('player1Score').innerHTML = stats[0]['totalScore']
+}
+//function that passes the ballArr array as an argument and returns the corresponding values for each ball
 function ballValue(colour) {
     if (colour === 'red') {
         return 1
@@ -96,6 +115,8 @@ function countScore(arr, stat, num) {
   console.log(playerScore)
 }
 
+document.getElementById('player1Score').innerHTML = stats[0]['totalScore']
+document.getElementById('player2Score').innerHTML = stats[1]['totalScore']
 
 countScore(ballArr,stats,1)
 countScore(ballArr,stats,2)

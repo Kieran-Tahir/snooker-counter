@@ -43,32 +43,32 @@ h1 {
     vertical-align:top;
 }
 
-#red-ball {
+#red {
     background-color: rgb(179, 15, 15);
     box-sizing: border-box;
 }
 
-#yellow-ball {
+#yellow {
     background-color: rgb(243, 243, 78);
 }
 
-#green-ball {
+#green {
     background-color: green;
 }
 
-#brown-ball {
+#brown {
     background-color: rgba(143, 9, 9, 0.685);
 }
 
-#blue-ball {
+#blue {
     background-color: rgb(55, 55, 218);
 }
 
-#pink-ball {
+#pink {
     background-color: rgb(252, 134, 154);
 }
 
-#black-ball {
+#black {
     background-color: black;
 
 }
