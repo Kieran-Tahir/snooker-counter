@@ -151,22 +151,14 @@ function updateStats (evt) {
    console.log (stats[0])
    console.log (stats[1])
 }
+
 //function that passes the ballArr array as an argument and returns the corresponding values for each ball
+
 function ballValue(colour) {
-    if (colour === 'red') {
-        return 1
-    } else if (colour === 'yellow') {
-        return 2 
-    } else if (colour === 'green') {
-        return 3
-    } else if (colour === 'brown') {
-        return 4
-    } else if (colour === 'blue') {
-        return 5
-    } else if (colour === 'pink') {
-        return 6
-    } else if (colour === 'black') {
-        return 7
+    for (var i = 0; i < ballArr.length; i++) {
+        if (colour === ballArr[i]) {
+            return i + 1
+        }
     }
 }
 
