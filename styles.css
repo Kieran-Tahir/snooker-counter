@@ -112,7 +112,8 @@ img {
 }   
 
 #currentPlayer {
-    font-style: normal;
+    font-style: bold;
+    
 }
 
 #button {
