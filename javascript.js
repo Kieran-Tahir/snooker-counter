@@ -57,6 +57,8 @@ stats = [
     }
 ]
 
+console.log('starting fouls for player one count is: ', stats[0]['fouls'])
+
 function changePlayer () {
     if (document.getElementById('currentPlayer').innerHTML === 'Player 1') {
         document.getElementById('currentPlayer').innerHTML = 'Player 2'
@@ -71,7 +73,7 @@ function changePlayer () {
 // difference of each foul count. otherwise do nothing.
 
 var fouls1 = {
-    '7':1,
+    '7':0,
     '6':0,
     '5':0,
     '4':0,
@@ -88,19 +90,18 @@ function foulUpdate (playernum) {
     if (playernum === 1) {
         if (fouls1 === stats[0]['fouls']) {
             return
-        } else if (fouls1 != stats[0]['fouls']) {
-            stats[0]['fouls'] = fouls1
+        } else if (fouls1 !== stats[0]['fouls']) {
             stats[1]['totalScore'] += 7*(fouls1['7'] - stats[0]['fouls']['7']) + 6*(fouls1['6'] - stats[0]['fouls']['6']) 
-            + 5*(fouls1['5'] - stats[0]['fouls']['5']) + 4*(fouls1['4'] - stats[0]['fouls']['4'])
-            console.log(stats)
+                                      + 5*(fouls1['5'] - stats[0]['fouls']['5']) + 4*(fouls1['4'] - stats[0]['fouls']['4'])
+            stats[0]['fouls'] = fouls1
         }
     } else if (playernum === 2) {
         if (fouls2 === stats[1]['fouls']) {
             return
-        } else if (fouls2 != stats[1]['fouls']) {
-            stats[1]['fouls'] = fouls2
+        } else if (fouls2 !== stats[1]['fouls']) {
             stats[0]['totalScore'] += 7*(fouls2['7'] - stats[1]['fouls']['7']) + 6*(fouls2['6'] - stats[1]['fouls']['6']) 
-            + 5*(fouls2['5'] - stats[1]['fouls']['5']) + 4*(fouls2['4'] - stats[1]['fouls']['4'])
+                                      + 5*(fouls2['5'] - stats[1]['fouls']['5']) + 4*(fouls2['4'] - stats[1]['fouls']['4'])
+            stats[1]['fouls'] = fouls2
             console.log (stats)
         }
     } 
@@ -134,10 +135,10 @@ function updateStats (evt) {
    var otherPlayer = player.split(' ')
    var otherArrayNum = 0
 
-   if (otherPlayer[1] === '1') {
+   if (number === 1) {
        otherPlayer[1] = '2'
        otherArrayNum = 1
-   } else if (otherPlayer[1] === '2') {
+   } else if (number === 2) {
         otherPlayer[1] = '1'
         otherArrayNum = 0
    } 
@@ -145,11 +146,14 @@ function updateStats (evt) {
    console.log('other player is: ', otherPlayer)
    otherPlayer = otherPlayer.join('')
    otherPlayer = otherPlayer.toLowerCase()
+   foulUpdate(number)
    countScore(ballArr, stats, number)
    document.getElementById(lowerPlayer + 'Score').innerHTML = stats[arrayNum]['totalScore']
+   document.getElementById(otherPlayer + 'Score').innerHTML = stats[otherArrayNum]['totalScore']
 //    document.getElementById(otherPlayer + 'Score').innerHTML = stats[otherArrayNum]['totalScore']
-   console.log (stats[0])
-   console.log (stats[1])
+    console.log (stats[0])
+    console.log (stats[1])
+    console.log ('updated player one fouls count is: ', stats[0]['fouls'])
 }
 
 //function that passes the ballArr array as an argument and returns the corresponding values for each ball

@@ -101,21 +101,48 @@ img {
 }
 
 #player-1{
-    left:0px;
-    margin-left: 0%;
-    margin-right:20%;
+    left: 0%;
+    margin: 0%;
 }
 
 #player-2{
-    right:0%;
-    margin-right:0%; 
-    margin-left:20%;
+    right: 0%;
+    margin: 0%;
 }   
 
 #currentPlayer {
     font-style: normal;
 }
 
-button {
+#button {
     vertical-align: bottom;
+}
+
+.fouls {
+    height: 65px;
+    width: 65px;
+    border: 2px solid black;
+    margin: 4%;
+    display:inline-block;
+    vertical-align: middle; 
+    background-color:rgb(110, 187, 143);
+}
+
+.fouls-container {
+    margin-left: auto;
+    margin-right: auto;
+    position: absolute;
+    left: 500px;
+    right: 500px;
+    bottom: 170px;
+    vertical-align: top;
+    height:75px;
+    width: fit-content;
+    display: inline-flex;
+}
+.info {
+    position: relative;
+    height: fit-content;
+    margin-left: 20%;
+    margin-right: 20%;
 }
