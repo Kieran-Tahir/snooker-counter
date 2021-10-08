@@ -111,11 +111,9 @@ function addFoul(evt) {
             foulDiff[fouls[i]] = updatedFoul[fouls[i]] - minusLastFoul[fouls[i]]  
         }
         if (document.getElementById('currentPlayer').innerHTML === 'Player 1') {
-            console.log(foulMultiplier(fouls[i]) * foulDiff[fouls[i]])
             stats[1]['totalScore'] += foulMultiplier(fouls[i]) * foulDiff[fouls[i]] 
             stats[0]['fouls'][fouls[i]] += foulDiff[fouls[i]]
             document.getElementById('player2Score').innerHTML = stats[1]['totalScore'] 
-            console.log(stats[1])  
         } else {
             stats[0]['totalScore'] += foulMultiplier(fouls[i]) * foulDiff[fouls[i]] 
             stats[0]['fouls'][fouls[i]] += foulDiff[fouls[i]] 
@@ -154,6 +152,9 @@ function updateStats (evt) {
         }
         stats[0]['totalScore'] += updatedBreak - minusLastBall
         document.getElementById('player1Score').innerHTML = stats[0]['totalScore']
+        if(stats[0]['maxBreak'] < updatedBreak) {
+            stats[0]['maxBreak'] = updatedBreak
+        }
     } else if (player === 'Player 2') {
         for (var i =0; i < ballArr.length; i++) {
             if (evt.target.id === ballArr[i]) {
@@ -162,5 +163,11 @@ function updateStats (evt) {
         }
         stats[1]['totalScore'] += updatedBreak - minusLastBall
         document.getElementById('player2Score').innerHTML = stats[1]['totalScore']
+        if(stats[1]['maxBreak'] < updatedBreak) {
+            stats[1]['maxBreak'] = updatedBreak
+        }
     }
+    console.log('Player 1 stats: ', stats[0])
+    console.log('Player 2 stats: ', stats[1])
+
 }
