@@ -134,27 +134,18 @@ img {
 }
 
 .fouls {
-    height: 65px;
-    width: 65px;
+    height: 60px;
+    width: 60px;
     border: 2px solid black;
     margin: 4%;
-    display:inline-block;
     vertical-align: middle; 
     background-color:rgb(110, 187, 143);
     cursor: pointer;
 }
 
 .fouls-container {
-    margin-left: auto;
-    margin-right: auto;
-    position: absolute;
-    left: 500px;
-    right: 500px;
-    bottom: 170px;
-    vertical-align: top;
-    height:75px;
-    width: fit-content;
     display: inline-flex;
+    padding:5px
 }
 .info {
     position: relative;
