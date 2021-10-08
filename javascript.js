@@ -4,6 +4,8 @@ function start () {
   bindEventListeners(document.getElementsByClassName('balls'))
   bindButtons(document.getElementById('button'))
   bindFouls(document.getElementsByClassName('fouls'))
+  document.getElementById('remainingPoints').innerHTML = remainingPoints
+  document.getElementById('red').innerHTML = remainingReds
 }
 
 function bindEventListeners (balls) {
@@ -22,11 +24,13 @@ function bindFouls (foulButtons) {
     }
 }
 
-const ballArr = ['red','yellow','green','brown','blue', 'pink','black']
+const ballArr = ['red','yellow','green','brown','blue', 'pink','black','free']
 const fouls = ['4','5','6','7']
 var minusLastBall = 0
 var updatedBreak = 0
-
+var remainingReds = 15
+var remainingPoints = 147
+var colourPoints = 27
 // player 1 stats are stats[0], player 2 stats are stats[1]
 
 var stats =[]
@@ -116,7 +120,7 @@ function addFoul(evt) {
             document.getElementById('player2Score').innerHTML = stats[1]['totalScore'] 
         } else {
             stats[0]['totalScore'] += foulMultiplier(fouls[i]) * foulDiff[fouls[i]] 
-            stats[0]['fouls'][fouls[i]] += foulDiff[fouls[i]] 
+            stats[1]['fouls'][fouls[i]] += foulDiff[fouls[i]] 
             document.getElementById('player1Score').innerHTML = stats[0]['totalScore']       
         }
     }
@@ -125,10 +129,13 @@ function addFoul(evt) {
 //function that passes the ballArr array as an argument and returns the corresponding values for each ball
 
 function ballValue(colour) {
-    for (var i = 0; i < ballArr.length; i++) {
+    for (var i = 0; i < 7; i++) {
         if (colour === ballArr[i]) {
             return i + 1
-        }
+        } 
+    }
+    if (colour === 'free') {
+        return 1
     }
 }
 
@@ -152,6 +159,7 @@ function updateStats (evt) {
         }
         stats[0]['totalScore'] += updatedBreak - minusLastBall
         document.getElementById('player1Score').innerHTML = stats[0]['totalScore']
+        document.getElementById('currentBreak1').innerHTML = updatedBreak
         if(stats[0]['maxBreak'] < updatedBreak) {
             stats[0]['maxBreak'] = updatedBreak
         }
@@ -163,11 +171,51 @@ function updateStats (evt) {
         }
         stats[1]['totalScore'] += updatedBreak - minusLastBall
         document.getElementById('player2Score').innerHTML = stats[1]['totalScore']
+        document.getElementById('currentBreak2').innerHTML = updatedBreak
         if(stats[1]['maxBreak'] < updatedBreak) {
             stats[1]['maxBreak'] = updatedBreak
         }
     }
+    if (evt.target.id === 'red') {
+        remainingReds--
+    }
+
+    remainingPoints = 8*remainingReds + 27
+    document.getElementById('remainingPoints').innerHTML = remainingPoints
+    document.getElementById('red').innerHTML = remainingReds
+
+    // points on the table once reds are gone:
+    if (remainingReds > 0) {
+        remainingPoints = 8*remainingReds + 27
+    document.getElementById('remainingPoints').innerHTML = remainingPoints
+    document.getElementById('red').innerHTML = remainingReds
+    } else if (remainingReds <= 0){
+        if (evt.target.id === 'yellow') {
+            colourPoints -= 2
+            remainingPoints = colourPoints
+        } else if (evt.target.id === 'green') {
+            colourPoints -= 3 
+            remainingPoints = colourPoints
+        } else if (evt.target.id === 'brown') {
+            colourPoints -= 4 
+            remainingPoints = colourPoints
+        } else if (evt.target.id === 'blue') {
+            colourPoints -= 5
+            remainingPoints = colourPoints
+        } else if (evt.target.id === 'pink') {
+            colourPoints -= 6
+            remainingPoints = colourPoints
+        } else if (evt.target.id === 'black') {
+            colourPoints -= 7 
+            remainingPoints = colourPoints
+        }
+
+    document.getElementById('remainingPoints').innerHTML = remainingPoints
+    console.log(colourPoints)
+    }
+
     console.log('Player 1 stats: ', stats[0])
     console.log('Player 2 stats: ', stats[1])
-
+    
+    // function viewStats ()
 }
