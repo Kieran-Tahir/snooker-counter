@@ -22,7 +22,7 @@ h1 {
 }
 
 .container {
-    margin:4% 15%;
+    margin:2% 15%;
     right:0%;
     left:0%;
     text-align: center;
@@ -42,6 +42,8 @@ h1 {
     text-align: center;
     vertical-align:top;
     cursor: pointer;
+    font-weight: bold;
+    font-size: 20px;
 }
 
 #red {
@@ -141,6 +143,9 @@ img {
     vertical-align: middle; 
     background-color:rgb(110, 187, 143);
     cursor: pointer;
+    line-height: 60px;
+    font-weight: bold;
+    font-size: 20px;
 }
 
 .fouls-container {

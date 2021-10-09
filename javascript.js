@@ -1,11 +1,20 @@
+const ballArr = ['red','yellow','green','brown','blue', 'pink','black','free']
+const fouls = ['4','5','6','7']
+var minusLastBall = 0
+var updatedBreak = 0
+var remainingReds = 15
+var remainingPoints = 147
+var colourPoints = 27
+
 document.addEventListener('DOMContentLoaded', start)
 
 function start () {
-  bindEventListeners(document.getElementsByClassName('balls'))
-  bindButtons(document.getElementById('button'))
-  bindFouls(document.getElementsByClassName('fouls'))
-  document.getElementById('remainingPoints').innerHTML = remainingPoints
-  document.getElementById('red').innerHTML = remainingReds
+    bindEventListeners(document.getElementsByClassName('balls'))
+    bindButtons(document.getElementById('button'))
+    bindFouls(document.getElementsByClassName('fouls'))
+    document.getElementById('remainingPoints').innerHTML = remainingPoints
+    document.getElementById('red').innerHTML = remainingReds
+    assignFouls(fouls)
 }
 
 function bindEventListeners (balls) {
@@ -24,13 +33,21 @@ function bindFouls (foulButtons) {
     }
 }
 
-const ballArr = ['red','yellow','green','brown','blue', 'pink','black','free']
-const fouls = ['4','5','6','7']
-var minusLastBall = 0
-var updatedBreak = 0
-var remainingReds = 15
-var remainingPoints = 147
-var colourPoints = 27
+function assignFouls (array) {
+    console.log ('assignFouls is being called')
+    for (i= 0; i < array.length; i++) {
+        console.log('these are the foul buttons: ', document.getElementById(fouls[i]).innerHTML)
+        document.getElementById(fouls[i]).innerHTML = fouls[i]
+    }
+}
+
+// const ballArr = ['red','yellow','green','brown','blue', 'pink','black','free']
+// const fouls = ['4','5','6','7']
+// var minusLastBall = 0
+// var updatedBreak = 0
+// var remainingReds = 15
+// var remainingPoints = 147
+// var colourPoints = 27
 // player 1 stats are stats[0], player 2 stats are stats[1]
 
 var stats =[]
