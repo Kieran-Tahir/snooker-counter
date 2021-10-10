@@ -162,3 +162,15 @@ img {
 .playerTitle {
     margin-top: 0%;
 }
+
+#undo {
+    border: 2px solid black;
+    height: 60px;
+    width: 120px;
+    margin: 4%;
+    margin-left: 8%;
+    line-height: 60px;
+    font-weight: bold;
+    background: blanchedalmond;
+    cursor: pointer;
+} 
