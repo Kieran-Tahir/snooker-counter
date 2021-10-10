@@ -43,15 +43,6 @@ function assignFouls (array) {
     }
 }
 
-// const ballArr = ['red','yellow','green','brown','blue', 'pink','black','free']
-// const fouls = ['4','5','6','7']
-// var minusLastBall = 0
-// var updatedBreak = 0
-// var remainingReds = 15
-// var remainingPoints = 147
-// var colourPoints = 27
-// player 1 stats are stats[0], player 2 stats are stats[1]
-
 var stats =[]
 stats = [
     {
@@ -126,13 +117,14 @@ function addFoul(evt) {
             if (foulMultiplier(fouls[i]) * updatedFoul[fouls[i]] > 0) {
                 newFoul = foulMultiplier(fouls[i]) * updatedFoul[fouls[i]]
                 stats[1]['totalScore'] += newFoul
-                stats[0]['fouls'][fouls[i]] += 1
+                stats[0]['fouls'][fouls[i]] ++
                 document.getElementById('player2Score').innerHTML = stats[1]['totalScore']
                 clickTracker.push ({
                     player: 1,
                     action: 'foul',
                     key: evt.target.id,
                     pointsAwarded: newFoul,
+                    currentBreak: document.getElementById('currentBreak1').innerHTML
                 })
             }
         } else {
@@ -146,6 +138,7 @@ function addFoul(evt) {
                     action: 'foul',
                     key: evt.target.id,
                     pointsAwarded: newFoul,
+                    currentBreak: document.getElementById('currentBreak2').innerHTML
                 })
             }
         }
@@ -166,82 +159,83 @@ function ballValue(colour) {
     }
 }
 
-//updateStats function is called when the corresponding coloured ball is clicked, increments the ball count in player stat array and
-//calls the countScore function to update the totalscore being displayed
+//updateStats function is called when the corresponding coloured ball is clicked, increments the ball count 
+// and adds the current break (updatedBreak) to the totalscore value in the player stat array. Updates the 
+// visible player score by assigning the new totalScore value to the element. 
 
 function updateStats (evt) {
-    // foulUpdate(number)
     var player = document.getElementById('currentPlayer').innerHTML
-
-// increment the count of the respective players ball count(in the stats array) if the target id that was clicked matches that colour
     minusLastBall = updatedBreak
     updatedBreak += ballValue(evt.target.id)
-
-    if (player === 'Player 1') {
-        for (var i =0; i < ballArr.length; i++) {
+    for (var i =0; i < ballArr.length; i++) { 
+        if (player === 'Player 1') {
             if (evt.target.id === ballArr[i]) {
                 stats[0][ballArr[i]]++
             }
-        }
-        stats[0]['totalScore'] += updatedBreak - minusLastBall
-        document.getElementById('player1Score').innerHTML = stats[0]['totalScore']
-        document.getElementById('currentBreak1').innerHTML = updatedBreak
-        if(stats[0]['maxBreak'] < updatedBreak) {
-            stats[0]['maxBreak'] = updatedBreak
-        }
-    } else if (player === 'Player 2') {
-        for (var i =0; i < ballArr.length; i++) {
+            if (updatedBreak > stats[0]['totalScore']){
+                stats[0]['totalScore'] += updatedBreak - minusLastBall
+            }
+            document.getElementById('player1Score').innerHTML = stats[0]['totalScore']
+            document.getElementById('currentBreak1').innerHTML = updatedBreak
+            if(stats[0]['maxBreak'] < updatedBreak) {
+                stats[0]['maxBreak'] = updatedBreak
+            }
+        } else if (player === 'Player 2') {
             if (evt.target.id === ballArr[i]) {
                 stats[1][ballArr[i]]++
             }
+            if (updatedBreak > stats[1]['totalScore']){
+                stats[1]['totalScore'] += updatedBreak - minusLastBall
+            }
+            document.getElementById('player2Score').innerHTML = stats[1]['totalScore']
+            document.getElementById('currentBreak2').innerHTML = updatedBreak
+            if(stats[1]['maxBreak'] < updatedBreak) {
+                stats[1]['maxBreak'] = updatedBreak
+            }
         }
-        stats[1]['totalScore'] += updatedBreak - minusLastBall
-        document.getElementById('player2Score').innerHTML = stats[1]['totalScore']
-        document.getElementById('currentBreak2').innerHTML = updatedBreak
-        if(stats[1]['maxBreak'] < updatedBreak) {
-            stats[1]['maxBreak'] = updatedBreak
-        }
+    }
+    if (player === 'Player 1') {
+        clickTracker.push({
+            player: 1,
+            action: 'ball',
+            key: evt.target.id,
+            pointsAwarded: ballValue(evt.target.id),
+            currentBreak: document.getElementById('currentBreak1').innerHTML
+        })
+    } else {
+        clickTracker.push({
+            player: 2,
+            action: 'ball',
+            key: evt.target.id,
+            pointsAwarded: ballValue(evt.target.id),
+            currentBreak: document.getElementById('currentBreak1').innerHTML
+        })
     }
     if (evt.target.id === 'red') {
         remainingReds--
     }
-
-    remainingPoints = 8*remainingReds + 27
     document.getElementById('remainingPoints').innerHTML = remainingPoints
     document.getElementById('red').innerHTML = remainingReds
 
     // points on the table once reds are gone:
+
     if (remainingReds > 0) {
         remainingPoints = 8*remainingReds + 27
     document.getElementById('remainingPoints').innerHTML = remainingPoints
     document.getElementById('red').innerHTML = remainingReds
     } else if (remainingReds <= 0){
-        if (evt.target.id === 'yellow') {
-            colourPoints -= 2
-            remainingPoints = colourPoints
-        } else if (evt.target.id === 'green') {
-            colourPoints -= 3 
-            remainingPoints = colourPoints
-        } else if (evt.target.id === 'brown') {
-            colourPoints -= 4 
-            remainingPoints = colourPoints
-        } else if (evt.target.id === 'blue') {
-            colourPoints -= 5
-            remainingPoints = colourPoints
-        } else if (evt.target.id === 'pink') {
-            colourPoints -= 6
-            remainingPoints = colourPoints
-        } else if (evt.target.id === 'black') {
-            colourPoints -= 7 
-            remainingPoints = colourPoints
+        for( var i= 1; i < ballArr.length; i++ ) {
+            if (evt.target.id === ballArr[i]) {
+                colourPoints -= ballValue(ballArr[i])
+                remainingPoints = colourPoints
+            }
         }
-
     document.getElementById('remainingPoints').innerHTML = remainingPoints
     console.log(colourPoints)
     }
 
     console.log('Player 1 stats: ', stats[0])
     console.log('Player 2 stats: ', stats[1])
-    
+    console.log('this is the clickTracker array: ', clickTracker)
     // function viewStats ()
 }
