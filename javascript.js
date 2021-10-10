@@ -150,7 +150,6 @@ function addFoul(evt) {
             }
         }
     }
-    console.log('this is the clickTracker array: ', clickTracker)
 }
 
 //function that passes the ballArr array as an argument and returns the corresponding values for each ball
@@ -243,16 +242,16 @@ function updateStats (evt) {
             }
         }
     document.getElementById('remainingPoints').innerHTML = remainingPoints
-    console.log(colourPoints)
     }
-    console.log('this is the clickTracker before the undo button: ', clickTracker)
+    console.log('Player 1 stats: ', stats[0])
+    console.log('Player 2 stats: ', stats[1])
 }
 
 function undoLast () {
     updatedBreak = 0
     var lastClick = clickTracker.pop()
-    previousTurn = clickTracker[clickTracker.length -1]
     console.log('this is lastClick: ', lastClick)
+    previousTurn = clickTracker[clickTracker.length -1]
     updatedBreak = previousTurn['currentBreak']
 
 //this reverses the information that was added into the stats array
@@ -261,7 +260,7 @@ function undoLast () {
             stats[0][lastClick['key']]--
             stats[0]['totalScore'] -= lastClick['pointsAwarded']
         } else if (lastClick['action'] === 'foul') {
-            stats[0][lastClick['key']]--
+            stats[0]['fouls'][lastClick['key']]--
             stats[1]['totalScore'] -= lastClick['pointsAwarded']
         } 
     } else if (lastClick['player'] == 2) {
@@ -269,11 +268,10 @@ function undoLast () {
             stats[1][lastClick['key']]--
             stats[1]['totalScore'] -= lastClick['pointsAwarded']
         } else if (lastClick['action'] === 'foul') {
-            stats[1][lastClick['key']]--
+            stats[1]['fouls'][lastClick['key']]-- 
             stats[0]['totalScore'] -= lastClick['pointsAwarded']
-        }   
+        }
     }
-
     updatedBreak = previousTurn['currentBreak']
 // this updates the visual player information 
     document.getElementById('player1Score').innerHTML = stats[0]['totalScore']
@@ -295,9 +293,6 @@ function undoLast () {
         document.getElementById('remainingPoints').innerHTML = remainingPoints
         document.getElementById('red').innerHTML = remainingReds
     }
-    console.log(previousTurn)
-    console.log('this is the clickTracker array after the undo function: ', clickTracker)
-    console.log('this is player 1 stats: ', stats[0])
-    console.log('this is player 2 stats: ', stats[1])
-    console.log(updatedBreak)
+    console.log('Player 1 stats: ', stats[0])
+    console.log('Player 2 stats: ', stats[1]) 
 }
