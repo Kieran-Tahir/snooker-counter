@@ -5,6 +5,8 @@ var updatedBreak = 0
 var remainingReds = 15
 var remainingPoints = 147
 var colourPoints = 27
+var clickTracker = []
+var lastClick = []
 
 document.addEventListener('DOMContentLoaded', start)
 
@@ -106,41 +108,49 @@ function foulMultiplier (colour) {
     }
 }
 
+// function that is called when foul buttons are clicked, adds the 
 function addFoul(evt) {
-    var minusLastFoul = {
-        '4':0,
-        '5':0,
-        '6':0,
-        '7':0
-    }
     var updatedFoul= {
         '4':0,
         '5':0,
         '6':0,
         '7':0
     }    
-    var foulDiff = {
-        '4':0,
-        '5':0,
-        '6':0,
-        '7':0,
-    }
-
     for (var i =0; i < fouls.length; i++) {
+        var newFoul = 0
+
         if (evt.target.id === fouls[i]) {
-            updatedFoul[fouls[i]]++
-            foulDiff[fouls[i]] = updatedFoul[fouls[i]] - minusLastFoul[fouls[i]]  
+            updatedFoul[fouls[i]]++ 
         }
         if (document.getElementById('currentPlayer').innerHTML === 'Player 1') {
-            stats[1]['totalScore'] += foulMultiplier(fouls[i]) * foulDiff[fouls[i]] 
-            stats[0]['fouls'][fouls[i]] += foulDiff[fouls[i]]
-            document.getElementById('player2Score').innerHTML = stats[1]['totalScore'] 
+            if (foulMultiplier(fouls[i]) * updatedFoul[fouls[i]] > 0) {
+                newFoul = foulMultiplier(fouls[i]) * updatedFoul[fouls[i]]
+                stats[1]['totalScore'] += newFoul
+                stats[0]['fouls'][fouls[i]] += 1
+                document.getElementById('player2Score').innerHTML = stats[1]['totalScore']
+                clickTracker.push ({
+                    player: 1,
+                    action: 'foul',
+                    key: evt.target.id,
+                    pointsAwarded: newFoul,
+                })
+            }
         } else {
-            stats[0]['totalScore'] += foulMultiplier(fouls[i]) * foulDiff[fouls[i]] 
-            stats[1]['fouls'][fouls[i]] += foulDiff[fouls[i]] 
-            document.getElementById('player1Score').innerHTML = stats[0]['totalScore']       
+            if (foulMultiplier(fouls[i]) * updatedFoul[fouls[i]] > 0) {
+                newFoul = foulMultiplier(fouls[i]) * updatedFoul[fouls[i]]
+                stats[0]['totalScore'] += newFoul
+                stats[1]['fouls'][fouls[i]] += 1
+                document.getElementById('player1Score').innerHTML = stats[0]['totalScore']
+                clickTracker.push ({
+                    player: 2,
+                    action: 'foul',
+                    key: evt.target.id,
+                    pointsAwarded: newFoul,
+                })
+            }
         }
     }
+    console.log('this is the clickTracker array: ', clickTracker)
 }
 
 //function that passes the ballArr array as an argument and returns the corresponding values for each ball
@@ -166,7 +176,6 @@ function updateStats (evt) {
 // increment the count of the respective players ball count(in the stats array) if the target id that was clicked matches that colour
     minusLastBall = updatedBreak
     updatedBreak += ballValue(evt.target.id)
-    // Everything above this line is CHILL
 
     if (player === 'Player 1') {
         for (var i =0; i < ballArr.length; i++) {
