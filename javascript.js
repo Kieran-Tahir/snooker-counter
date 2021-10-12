@@ -41,7 +41,7 @@ function bindFouls (foulButtons) {
     }
 }
 
-// assignFouls assigns the number to each foul button at the start 
+// assignFouls assigns the number to each foul button at the start
 function assignFouls (array) {
     for (i= 0; i < array.length; i++) {
         document.getElementById(fouls[i]).innerHTML = fouls[i]
@@ -66,8 +66,8 @@ stats = [
             '7':0
         },
         totalScore: 0,
-    }, 
-    {   
+    },
+    {
         red: 0,
         yellow: 0,
         green: 0,
@@ -99,24 +99,24 @@ function changePlayer () {
 function foulMultiplier (colour) {
     for (var i = 0; i < fouls.length; i++) {
         if (colour === fouls[i]) {
-           return i + 4 
+           return i + 4
         }
     }
 }
 
-// function that is called when foul buttons are clicked, adds the 
+// function that is called when foul buttons are clicked, adds the
 function addFoul(evt) {
     var updatedFoul= {
         '4':0,
         '5':0,
         '6':0,
         '7':0
-    }    
+    }
     for (var i =0; i < fouls.length; i++) {
         var newFoul = 0
 
         if (evt.target.id === fouls[i]) {
-            updatedFoul[fouls[i]]++ 
+            updatedFoul[fouls[i]]++
         }
         if (document.getElementById('currentPlayer').innerHTML === 'Player 1') {
             if (foulMultiplier(fouls[i]) * updatedFoul[fouls[i]] > 0) {
@@ -158,7 +158,7 @@ function ballValue(colour) {
     for (var i = 0; i < 7; i++) {
         if (colour === ballArr[i]) {
             return i + 1
-        } 
+        }
     }
     if (colour === 'free') {
         return 1
@@ -166,17 +166,17 @@ function ballValue(colour) {
 }
 
 function remainingPoints() {
-    
+
 }
-//updateStats function is called when the corresponding coloured ball is clicked, increments the ball count 
-// and adds the current break (updatedBreak) to the totalscore value in the player stat array. Updates the 
-// visible player score by assigning the new totalScore value to the element. 
+//updateStats function is called when the corresponding coloured ball is clicked, increments the ball count
+// and adds the current break (updatedBreak) to the totalscore value in the player stat array. Updates the
+// visible player score by assigning the new totalScore value to the element.
 
 function updateStats (evt) {
     var player = document.getElementById('currentPlayer').innerHTML
     minusLastBall = updatedBreak
     updatedBreak += ballValue(evt.target.id)
-    for (var i =0; i < ballArr.length; i++) { 
+    for (var i =0; i < ballArr.length; i++) {
         if (player === 'Player 1') {
             if (evt.target.id === ballArr[i]) {
                 stats[0][ballArr[i]]++
@@ -209,7 +209,7 @@ function updateStats (evt) {
             action: 'ball',
             key: evt.target.id,
             pointsAwarded: ballValue(evt.target.id),
-            currentBreak: document.getElementById('currentBreak1').innerHTML,
+            currentBreak: parseInt(document.getElementById('currentBreak1').innerHTML),
             totalScore: stats[0]['totalScore']
         })
     } else {
@@ -218,7 +218,7 @@ function updateStats (evt) {
             action: 'ball',
             key: evt.target.id,
             pointsAwarded: ballValue(evt.target.id),
-            currentBreak: document.getElementById('currentBreak1').innerHTML,
+            currentBreak: parseInt(document.getElementById('currentBreak2').innerHTML),
             totalScore: stats[1]['totalScore']
         })
     }
@@ -262,18 +262,18 @@ function undoLast () {
         } else if (lastClick['action'] === 'foul') {
             stats[0]['fouls'][lastClick['key']]--
             stats[1]['totalScore'] -= lastClick['pointsAwarded']
-        } 
+        }
     } else if (lastClick['player'] == 2) {
         if (lastClick['action'] === 'ball') {
             stats[1][lastClick['key']]--
             stats[1]['totalScore'] -= lastClick['pointsAwarded']
         } else if (lastClick['action'] === 'foul') {
-            stats[1]['fouls'][lastClick['key']]-- 
+            stats[1]['fouls'][lastClick['key']]--
             stats[0]['totalScore'] -= lastClick['pointsAwarded']
         }
     }
     updatedBreak = previousTurn['currentBreak']
-// this updates the visual player information 
+// this updates the visual player information
     document.getElementById('player1Score').innerHTML = stats[0]['totalScore']
     document.getElementById('player2Score').innerHTML = stats[1]['totalScore']
 
@@ -294,5 +294,5 @@ function undoLast () {
         document.getElementById('red').innerHTML = remainingReds
     }
     console.log('Player 1 stats: ', stats[0])
-    console.log('Player 2 stats: ', stats[1]) 
+    console.log('Player 2 stats: ', stats[1])
 }

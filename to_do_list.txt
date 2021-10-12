@@ -1,0 +1,5 @@
+- Create a clicktracker function that can be called instead of defining it in every function that needs to be tracked.
+
+- Fix free ball bug, needs to be added to ballvalues and clicktracker
+
+MAJOR REFACTOR
